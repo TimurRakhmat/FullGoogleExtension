@@ -16,6 +16,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+with open('total_costs.json', encoding='utf-8') as f:
+        templates = json.load(f)
+
 
 @app.post("/find")
 async def find_req(data=Body()):
@@ -26,8 +29,7 @@ async def find_req(data=Body()):
     req_str = data["find_str"]
     req_params = data["find_arr"]
 
-    with open('total_costs.json', encoding='utf-8') as f:
-        templates = json.load(f)
+    
 
     response_params = []
     dam_len = len(req_str) // 8 + 1

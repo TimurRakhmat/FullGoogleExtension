@@ -34,6 +34,8 @@ def damerau_levenshtein_distance(s1, s2, costs):
             )
             if i and j and s1[i] == s2[j - 1] and s1[i - 1] == s2[j]:
                 d[(i, j)] = min(d[(i, j)], d[i - 2, j - 2] + transpose_cost)
+                
+    return d[lenstr1 - 1, lenstr2 - 1]
 
     # print(" \t \t", end="")
     # for j in range(lenstr2):
@@ -41,7 +43,6 @@ def damerau_levenshtein_distance(s1, s2, costs):
     # print()
     #
     # print(" \t0\t", end="")
-    # for j in range(lenstr2):
     #     print(str(d[(-1, j)]) + "\t", end="")
     # print()
     #
@@ -49,9 +50,10 @@ def damerau_levenshtein_distance(s1, s2, costs):
     #     print(s1[i]+'\t'+str(d[(i, -1)])+"\t", end="")
     #     for j in range(lenstr2):
     #         print(str(d[(i, j)])+"\t", end="")
-    #     print()
+    #     print()   # for j in range(lenstr2):
+ 
 
-    return d[lenstr1 - 1, lenstr2 - 1]
+    
 
 
 if __name__ == '__main__':
