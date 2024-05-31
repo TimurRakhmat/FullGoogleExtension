@@ -3,7 +3,7 @@ import json
 
 
 def get_costs_value(costs, s1, s2, key):
-    return costs.get("key", {}).get(s1+s2, 1)
+    return costs.get(key, {}).get(s1+s2, 1)
 
 
 def damerau_levenshtein_distance(s1, s2, costs):
@@ -70,9 +70,9 @@ def damerau_levenshtein_distance_costs(s1, s2, costs = {}):
 
     
     d[(-1, -1)] = 0
-    for i in range(-1, lenstr1 + 1):
+    for i in range(-1, min(kk, lenstr1 + 1)):
         d[(i, -1)] = i + 1
-    for j in range(-1, lenstr2 + 1):
+    for j in range(-1, min(kk, lenstr2 + 1)):
         d[(-1, j)] = j + 1
 
     k = lenstr1/lenstr2
@@ -102,11 +102,11 @@ def damerau_levenshtein_distance_costs(s1, s2, costs = {}):
     
     print(" \t0\t", end="")
     for j in range(lenstr2):
-        print(str(d[(-1, j)]) + "\t", end="")
+        print(str(d.get((-1, j), "*")) + "\t", end="")
     print()
     
     for i in range(lenstr1):
-        print(s1[i]+'\t'+str(d[(i, -1)])+"\t", end="")
+        print(s1[i]+'\t'+str(d.get((i, -1), "*"))+"\t", end="")
         for j in range(lenstr2):
             print(str(d.get((i, j), "*"))+"\t", end="")
         print()   # for j in range(lenstr2):
@@ -119,8 +119,8 @@ def damerau_levenshtein_distance_costs(s1, s2, costs = {}):
 
 
 if __name__ == '__main__':
-    # with open('total_costs.json', encoding='utf-8') as f:
-    #     templates = json.load(f)
+    with open('total_costs.json', encoding='utf-8') as f:
+        templates = json.load(f)
 
-    cost_result = damerau_levenshtein_distance("abcd","abdc", {})
+    cost_result = damerau_levenshtein_distance_costs("капкан","таракан", templates)
     print(cost_result)
